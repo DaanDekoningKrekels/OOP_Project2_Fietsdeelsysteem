@@ -17,15 +17,16 @@ class FietsStation():
         self.longitude = longitude
 
     def __str__(self):
-        return f"Dit is station {self.ID}-{self.naam} ({self.longitude};{self.latitude}) " \
+        return f"Dit is station {str(self.ID).zfill(3)}-{self.naam} ({self.longitude};{self.latitude}) " \
                f"Er zijn nog {self.aantal_plaatsen_vrij} van de {self.aantal_plaatsen} plaatsen vrij."
 
-    def voeg_fiets_toe(self, nieuwe_fiets):
-        for fiets in self.fietsen:
-            if fiets['fiets'] is None:
-                fiets['fiets'] = nieuwe_fiets
-                self.aantal_plaatsen_vrij -= 1
-                break
+    def voeg_fiets_toe(self, *nieuwe_fiets):
+        for enkeling in nieuwe_fiets:
+            for fiets in self.fietsen:
+                if fiets['fiets'] is None:
+                    fiets['fiets'] = enkeling
+                    self.aantal_plaatsen_vrij -= 1
+                    break
 
     def ontleen_fiets(self, klant):
         if not isinstance(klant, Klant):
