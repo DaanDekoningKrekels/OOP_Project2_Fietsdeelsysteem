@@ -29,10 +29,11 @@ class FietsStation():
                     break
 
     def ontleen_fiets(self, klant):
-        if not isinstance(klant, Klant):
-            raise Exception("Enkel een Klant kan een fiets ontlenen.")
-        if klant.fiets is not None:
-            raise Exception("U heeft al een fiets ontleend")
+        if not isinstance(klant, Klant) and not isinstance(klant, Transporteur):
+            raise Exception("Enkel een Klant of Transporteur kan een fiets ontlenen.")
+        if isinstance(klant, Klant):
+            if klant.fiets is not None:
+                raise Exception("U heeft al een fiets ontleend")
 
         if self.aantal_plaatsen_vrij == 0:
             print("Het spijt ons, dit station is leeg.")
@@ -40,14 +41,18 @@ class FietsStation():
 
         for fiets in self.fietsen:
             if fiets['fiets'] is not None:
-                klant.fiets = fiets['fiets']
-                print(f"Beste {klant.voornaam}, neem uw fiets uit slot {fiets['SLOT']}")
+                if isinstance(klant, Klant):
+                    klant.fiets = fiets['fiets']
+                    print(f"Beste {klant.voornaam}, neem uw fiets uit slot {fiets['SLOT']}")
+                if isinstance(klant, Transporteur):
+                    klant.fietsen.append(fiets['fiets'])
+                    print(f"Fiets uit slot {fiets['SLOT']} kan worden meegenomen")
                 self.aantal_plaatsen_vrij += 1
                 fiets['fiets'] = None
                 break
 
     def plaats_fiets_terug(self, klant):
-        if not isinstance(klant, Klant):
+        if not isinstance(klant, Klant) and not isinstance(klant, Transporteur):
             raise Exception("Enkel een Klant kan een fiets ontlenen.")
 
         # Uiteraard zet je bij de echte stations je fiets eerst in het station.
@@ -57,14 +62,61 @@ class FietsStation():
 
         for fiets in self.fietsen:
             if fiets['fiets'] is None:
-                fiets['fiets'] = klant.fiets
-                klant.fiets = None
+                if isinstance(klant, Klant):
+                    fiets['fiets'] = klant.fiets
+                    klant.fiets = None
+                    print(f"Beste {klant.voornaam}, uw fiets werd correct teruggeplaatst")
+                if isinstance(klant, Transporteur):
+                    fiets['fiets'] = klant.fietsen.pop()
                 self.aantal_plaatsen_vrij -= 1
-                print(f"Beste {klant.voornaam}, uw fiets werd correct teruggeplaatst")
                 break
+
+
+class Transporteur():
+    def __init__(self, kenteken, aantal_plaatsen):
+        self.kenteken = kenteken
+        self.aantal_plaatsen = aantal_plaatsen
+        self.fietsen = []
+        self.aantal_plaatsen_vrij = aantal_plaatsen
+
+    def __str__(self):
+        return f"Kenteken: {self.kenteken}, Nog {self.aantal_plaatsen_vrij} plaatsen vrij"
+
+    def station_legen(self, station, aantal):
+        if not isinstance(station, FietsStation):
+            raise Exception("Een transporteur kan enkel een Station legen")
+        if aantal > self.aantal_plaatsen_vrij:
+            aantal = self.aantal_plaatsen_vrij
+
+        for i in range(aantal):
+            station.ontleen_fiets(self)
+
+        self.aantal_plaatsen_vrij = self.aantal_plaatsen - len(self.fietsen)
+
+    def station_bijvullen(self, station, aantal):
+        if not isinstance(station, FietsStation):
+            raise Exception("Een transporteur kan enkel een Station bijvullen")
+        if aantal > (self.aantal_plaatsen - self.aantal_plaatsen_vrij):
+            aantal = self.aantal_plaatsen_vrij
+
+        for i in range(aantal):
+            station.plaats_fiets_terug(self)
+
+        self.aantal_plaatsen_vrij = self.aantal_plaatsen - len(self.fietsen)
 
 
 class Fiets():
     def __init__(self, ID, fiets_type):
         self.ID = ID
         self.fiets_type = fiets_type
+        self.onderhoud = ""
+        self.zadel_achterstevoren = False
+
+    def __str__(self):
+        return f"Fiets {self.ID}, Type: {self.fiets_type}, Onderhoud geschiedenis: {self.onderhoud}"
+
+    def fiets_kapot(self):
+        self.zadel_achterstevoren = True
+
+    def onderhoud_toevoegen(self, log):
+        self.onderhoud += log + "\n"
