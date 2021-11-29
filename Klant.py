@@ -1,5 +1,5 @@
 from datetime import timedelta
-from random import random
+import random
 
 
 class Klant():
