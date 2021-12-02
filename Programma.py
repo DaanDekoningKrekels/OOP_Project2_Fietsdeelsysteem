@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from FietsSysteem import *
 
 oFietsStation1 = FietsStation("Centraal Station - Astrid", 1, 32, "51.21798654307154", "4.420624304044165")
@@ -52,4 +50,3 @@ oFietsStation3.plaats_fiets_terug(oKlant5)
 
 oTransporteur.station_legen(oFietsStation3, 2)
 oTransporteur.fietsen_fixen()
-
