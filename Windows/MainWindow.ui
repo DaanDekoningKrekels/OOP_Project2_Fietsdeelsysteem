@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QScrollArea" name="scrollArea">
+    <property name="geometry">
+     <rect>
+      <x>-1</x>
+      <y>-1</y>
+      <width>801</width>
+      <height>551</height>
+     </rect>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollAreaWidgetContents">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>799</width>
+       <height>549</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuObjecten">
+    <property name="title">
+     <string>Objecten</string>
+    </property>
+    <widget class="QMenu" name="menuNieuw">
+     <property name="title">
+      <string>Nieuw</string>
+     </property>
+     <addaction name="actionStation"/>
+     <addaction name="actionFiets"/>
+     <addaction name="actionGebruiker"/>
+     <addaction name="actionTransporteur"/>
+    </widget>
+    <widget class="QMenu" name="menuExporteren">
+     <property name="title">
+      <string>Exporteren</string>
+     </property>
+     <addaction name="actionAlle_stations"/>
+     <addaction name="actionAlle_fietsen"/>
+     <addaction name="actionAlle_gebruikers"/>
+     <addaction name="actionAlle_transporteurs"/>
+    </widget>
+    <addaction name="menuNieuw"/>
+    <addaction name="menuExporteren"/>
+   </widget>
+   <widget class="QMenu" name="menuVensters">
+    <property name="title">
+     <string>Vensters</string>
+    </property>
+    <addaction name="actionStations"/>
+    <addaction name="actionFietsen"/>
+    <addaction name="actionGebruikers"/>
+    <addaction name="actionTransporteurs"/>
+   </widget>
+   <addaction name="menuObjecten"/>
+   <addaction name="menuVensters"/>
+  </widget>
+  <action name="actionStation">
+   <property name="text">
+    <string>Station</string>
+   </property>
+   <property name="toolTip">
+    <string>Nieuw Station object toevoegen.</string>
+   </property>
+  </action>
+  <action name="actionFiets">
+   <property name="text">
+    <string>Fiets</string>
+   </property>
+   <property name="toolTip">
+    <string>Nieuw Fiets object toevoegen.</string>
+   </property>
+  </action>
+  <action name="actionGebruiker">
+   <property name="text">
+    <string>Gebruiker</string>
+   </property>
+   <property name="toolTip">
+    <string>Nieuw Gebruiker object toevoegen.</string>
+   </property>
+  </action>
+  <action name="actionTransporteur">
+   <property name="text">
+    <string>Transporteur</string>
+   </property>
+   <property name="toolTip">
+    <string>Nieuw Transporteur object toevoegen.</string>
+   </property>
+  </action>
+  <action name="actionAlle_stations">
+   <property name="text">
+    <string>Alle stations</string>
+   </property>
+  </action>
+  <action name="actionAlle_fietsen">
+   <property name="text">
+    <string>Alle fietsen</string>
+   </property>
+  </action>
+  <action name="actionAlle_gebruikers">
+   <property name="text">
+    <string>Alle gebruikers</string>
+   </property>
+  </action>
+  <action name="actionAlle_transporteurs">
+   <property name="text">
+    <string>Alle transporteurs</string>
+   </property>
+  </action>
+  <action name="actionStations">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Stations</string>
+   </property>
+  </action>
+  <action name="actionFietsen">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Fietsen</string>
+   </property>
+  </action>
+  <action name="actionGebruikers">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Gebruikers</string>
+   </property>
+  </action>
+  <action name="actionTransporteurs">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Transporteurs</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>actionFiets</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>showMinimized()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
