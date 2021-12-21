@@ -15,7 +15,7 @@ class Fiets():
         self.zadel_achterstevoren = False
 
     def __str__(self):
-        return f"Fiets {self.ID}, Type: {self.fiets_type}, Onderhoud geschiedenis: {self.onderhoud}"
+        return f"Fiets {self.ID}, Type: {self.fiets_type}, Onderhoud geschiedenis: {'leeg' if self.onderhoud == '' else self.onderhoud}"
 
     def fiets_kapot(self) -> None:
         """
@@ -88,9 +88,6 @@ class Transporteur():
 
 
 class FietsStation():
-    __kleur = '\033[31m'
-    __kleur_reset = '\033[0m'
-
     def __init__(self, naam: str, ID: int, aantal_plaatsen: int, latitude: str, longitude: str):
         """
         Fietsstation
@@ -114,8 +111,8 @@ class FietsStation():
         self.longitude = longitude
 
     def __str__(self):
-        return f"{self.__kleur}Dit is station {str(self.ID).zfill(3)}-{self.naam} ({self.longitude};{self.latitude}) " \
-               f"Er zijn nog {self.aantal_plaatsen_vrij} van de {self.aantal_plaatsen} plaatsen vrij.{self.__kleur_reset}"
+        return f"Dit is station {str(self.ID).zfill(3)}-{self.naam} ({self.longitude};{self.latitude}) " \
+               f"Er zijn nog {self.aantal_plaatsen_vrij} van de {self.aantal_plaatsen} plaatsen vrij."
 
     def voeg_fiets_toe(self, *nieuwe_fiets: Fiets) -> None:
         """
@@ -139,12 +136,11 @@ class FietsStation():
             raise Exception("Enkel een Klant of Transporteur kan een fiets ontlenen.")
         if isinstance(klant, Klant):
             if klant.fiets is not None:
-                print(self.__kleur + "U heeft al een fiets ontleend" + self.__kleur_reset)
+                print("U heeft al een fiets ontleend")
                 return
 
             if self.aantal_plaatsen_vrij == self.aantal_plaatsen:
-                print(self.__kleur + "Het spijt ons, dit station is leeg." +
-                      self.__kleur_reset)
+                print("Het spijt ons, dit station is leeg.")
                 return
         if isinstance(klant, Transporteur):
             for fiets in self.fietsen:
@@ -152,7 +148,7 @@ class FietsStation():
                     if fiets['fiets'].zadel_achterstevoren:
                         klant.fietsen.append(fiets['fiets'])
                         print(
-                            f"{self.__kleur}\tFiets uit slot {fiets['SLOT']} is stuk en kan worden meegenomen{self.__kleur_reset}")
+                            f"\tFiets uit slot {fiets['SLOT']} is stuk en kan worden meegenomen")
                         self.aantal_plaatsen_vrij += 1
                         fiets['fiets'] = None
 
@@ -161,10 +157,10 @@ class FietsStation():
                 if isinstance(klant, Klant):
                     klant.fiets = fiets['fiets']
                     print(
-                        f"{self.__kleur}\tBeste {klant.voornaam}, neem uw fiets uit slot {fiets['SLOT']}{self.__kleur_reset}")
+                        f"\tBeste {klant.voornaam}, neem uw fiets uit slot {fiets['SLOT']}")
                 if isinstance(klant, Transporteur):
                     klant.fietsen.append(fiets['fiets'])
-                    print(f"{self.__kleur}\tFiets uit slot {fiets['SLOT']} kan worden meegenomen{self.__kleur_reset}")
+                    print(f"\tFiets uit slot {fiets['SLOT']} kan worden meegenomen")
                 self.aantal_plaatsen_vrij += 1
                 fiets['fiets'] = None
                 break
@@ -180,7 +176,7 @@ class FietsStation():
 
         # Uiteraard zet je bij de echte stations je fiets eerst in het station.
         if self.aantal_plaatsen_vrij == 0:
-            print(self.__kleur + "Het spijt ons, dit station is vol." + self.__kleur_reset)
+            print("Het spijt ons, dit station is vol.")
             return
 
         for fiets in self.fietsen:
@@ -189,7 +185,7 @@ class FietsStation():
                     fiets['fiets'] = klant.fiets
                     klant.fiets = None
                     print(
-                        f"{self.__kleur}\tBeste {klant.voornaam}, uw fiets werd correct teruggeplaatst{self.__kleur_reset}")
+                        f"\tBeste {klant.voornaam}, uw fiets werd correct teruggeplaatst")
                 if isinstance(klant, Transporteur):
                     fiets['fiets'] = klant.fietsen.pop()
                 self.aantal_plaatsen_vrij -= 1

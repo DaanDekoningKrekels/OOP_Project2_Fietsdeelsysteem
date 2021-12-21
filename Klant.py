@@ -22,6 +22,9 @@ class JaarKaart(Abonnement):
         super(JaarKaart, self).__init__(start_datum)
         self.eind_datum = start_datum + timedelta(days=365)
 
+    def __str__(self):
+        return "Jaarkaart"
+
 
 class Weekpas(Abonnement):
     PRIJS = 11
@@ -35,6 +38,9 @@ class Weekpas(Abonnement):
         self.eind_datum = start_datum + timedelta(days=7)
         self.pincode = random.randint(1000, 9999)
 
+    def __str__(self):
+        return "Weekpas"
+
 
 class Dagpas(Weekpas):
     PRIJS = 5
@@ -46,6 +52,9 @@ class Dagpas(Weekpas):
         """
         super(Dagpas, self).__init__(start_datum)
         self.eind_datum = start_datum + timedelta(hours=24)
+
+    def __str__(self):
+        return "Dagpas"
 
 
 class Klant():
@@ -64,3 +73,8 @@ class Klant():
         self.email = email
         self.abonnement_type = abonnement_type
         self.fiets = None
+
+    def __str__(self):
+        return f"Dit is gebruiker {self.lid_nr}; {self.voornaam} {self.achternaam}\n" \
+               f"\tContact: {self.email}\n" \
+               f"\tAbonnement: {self.abonnement_type}"

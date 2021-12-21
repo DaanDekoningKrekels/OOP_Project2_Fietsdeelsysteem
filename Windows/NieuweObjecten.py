@@ -1,6 +1,7 @@
 import sys
 
-from PyQt6.QtWidgets import QInputDialog, QLineEdit, QWidget, QApplication, QMessageBox
+from PyQt6 import QtCore
+from PyQt6.QtWidgets import QInputDialog, QWidget, QApplication, QMessageBox, QVBoxLayout, QScrollArea, QMainWindow
 
 
 class NieuweObjecten(QWidget):
@@ -33,7 +34,8 @@ class NieuweObjecten(QWidget):
                 email, ok = QInputDialog.getText(self, 'Gebruiker toevoegen', 'Email')
                 if ok and email:
                     abonnement_type, ok = QInputDialog.getItem(self, 'Gebruiker toevoegen',
-                                                               'Selecteer het type abonnement', abonnementen, 0, False)
+                                                               'Selecteer het type abonnement', abonnementen, 0,
+                                                               False)
                     if ok:
                         return voornaam, achternaam, email, abonnement_type
 
@@ -46,6 +48,29 @@ class NieuweObjecten(QWidget):
 
     def ToonAnnulatie(self, wat: str) -> None:
         QMessageBox.information(self, "Annulatie", f"Er werd geen {wat} aangemaakt.")
+
+    def ToonNotImplemented(self) -> None:
+        QMessageBox.warning(self, "Aiai", "Aiai, deze functie is (nog) niet geïmplementeerd ;)")
+
+
+class NieuwVenster(QMainWindow):
+    """
+    This "window" is a QWidget. If it has no parent, it
+    will appear as a free-floating window as we want.
+    """
+
+    def __init__(self):
+        super().__init__()
+        self.scroll = QScrollArea()  # Scroll Area which contains the widgets, set as the centralWidget
+        self.widget = QWidget()  # Widget that contains the collection of Vertical Box
+        self.vbox = QVBoxLayout()  # The Vertical Box that contains the Horizontal Boxes of  labels and buttons
+        self.widget.setLayout(self.vbox)
+        self.scroll.setWidgetResizable(True)
+        self.scroll.setWidget(self.widget)
+        self.setCentralWidget(self.scroll)
+        # Schakel close button uit want je hebt toch het menu via de main window
+        self.setWindowFlag(QtCore.Qt.WindowType.WindowCloseButtonHint, False)
+        # self.setGeometry(600, 100, 1000, 900)
 
 
 if __name__ == '__main__':
