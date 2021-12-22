@@ -8,5 +8,22 @@ Tweede Python OOP project.
 
 Bij het uitvoeren van `Programma2.py` zal de GUI starten. Zie hieronder hoe deze interface eruitziet.
 
+Momenteel kan je:
+
+- Via `Objecten` > `Nieuw` 
+  - Een nieuw `Station` toevoegen.
+  - Een nieuwe `Gebruiker` toevoegen.
+  - Een nieuwe `Fiets` toevoegen.
+  - Een nieuwe `Transporteur` toevoegen. 
+- Via `Objecten` > `Importeren`
+  - Een GeoJSON bestand met stations importeren.
+- Via `Vensters`
+  - Alle stations weergeven.
+  - Alle gebruikers weergeven.
+  - Alle fietsen weergeven.
+  - Alle transporteurs weergeven.
+
+
+
 ![Interface](./Voorbeeld.jpg)
 
